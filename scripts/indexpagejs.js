@@ -27,6 +27,8 @@ function addToTable() {
   newRow.appendChild(showMoreRow);
   newRow.appendChild(addBook);
   table.appendChild(newRow);
+  var modalForm = document.getElementById("myFormModal");
+  modalForm.style.display = "none";
 }
 
 function showForm() {
