@@ -97,7 +97,9 @@ function showEditForm(indexToEdit) {
     } class="table-image">`;
     publishDate.innerHTML = document.getElementById("epublishDate").value;
     numberOfPages.innerHTML = document.getElementById("epagesNumber").value;
+    modalForm.style.display = "none";
   };
+
   window.onclick = function (event) {
     if (event.target == modalForm) {
       modalForm.style.display = "none";
