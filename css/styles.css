@@ -1,84 +1,52 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 
-h1,
-h2,
-h3,
-h4 {
-  text-align: center;
-  font-weight: bold;
+.about-book {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-#table-title,
-#shelf-title {
-  font-size: 30px;
-  display: block;
-  padding: 20px;
-  font-family: "Pacifico", cursive;
+#basic-form {
+  flex: 1 0 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.parallax {
-  /* The image used */
-  background-image: url("../images/paralax-bcg.jpg");
 
-  /* Set a specific height */
-  min-height: 500px;
-
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+#basic-form button {
+  max-width: 500px;
 }
-#table-description {
-  font-family: "Pacifico", cursive;
-  text-align: center;
+
+#basic-form-input {
+  border-radius: 25px;
+  width: 400px;
+  height: 50px;
+}
+
+#basic-form-input::placeholder {
   font-size: 20px;
+  padding: 0 10px;
 }
 
-html,
-body {
-  width: auto !important;
-  /* overflow-x: hidden !important; */
+#basic-form p {
+  font-size: 50px;
 }
 
-
-
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+.btn-outline-dark {
+  box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+    rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
 }
 
-
-.modal-image {
-  justify-self: flex-start;
-  align-self: flex-start;
-  width: 300px;
-  height: auto;
-  padding: 10px;
+.card-text {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 
-.table-image {
-  padding: 10px;
+#carousel_main {
+  grid-area: 1/1;
 }
 
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
 .close {
   color: #aaaaaa;
   position: absolute;
@@ -95,7 +63,6 @@ body {
   cursor: pointer;
 }
 
-/* The Close Form Button */
 .closeForm {
   color: #aaaaaa;
   position: absolute;
@@ -112,28 +79,35 @@ body {
   cursor: pointer;
 }
 
-.about-book {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .description {
   font-size: 30px;
   margin: 15px;
   max-width: 80%;
 }
 
-.title {
-  text-align: center;
-}
-
-#logo {
-  width: 100px;
+.error {
+  color: red;
 }
 
 .form {
   position: relative;
+}
+
+.form-control {
+  box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+    rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+  border: 1px solid black;
+}
+
+.form-input {
+  height: 55px;
+  text-indent: 33px;
+  border-radius: 10px;
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border: none;
 }
 
 .form .fa-search {
@@ -151,39 +125,154 @@ body {
   border-left: 1px solid #d1d5db;
 }
 
-.left-pan {
-  padding-left: 7px;
+h1,
+h2,
+h3,
+h4 {
+  text-align: center;
+  font-weight: bold;
 }
 
-.left-pan i {
-  padding-left: 10px;
+html,
+body {
+  width: auto !important;
+  /* overflow-x: hidden !important; */
 }
 
-.form-input {
-  height: 55px;
-  text-indent: 33px;
-  border-radius: 10px;
+#logo {
+  width: 100px;
 }
 
-.form-input:focus {
-  box-shadow: none;
-  border: none;
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-.form-control {
-  box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
-    rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
-  border: 1px solid black;
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
-.btn-outline-dark {
-  box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
-    rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+.modal-image {
+  justify-self: flex-start;
+  align-self: flex-start;
+  width: 300px;
+  height: auto;
+  padding: 10px;
 }
 
 #myChart {
   width: 500px;
   height: 100px;
+}
+
+.nav-text {
+  font-size: 18px !important;
+}
+
+.no-books-text {
+  padding: 200px 0;
+}
+
+.parallax {
+  background-image: url("../images/paralax-bcg.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.profile-buttons {
+  border-style: none;
+  background: none;
+  color: #ffff;
+}
+
+.profile-card {
+  background: #242323;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.5);
+  display: flex;
+  flex-direction: row;
+  border-radius: 25px;
+  max-width: 700px;
+  margin: 100px auto;
+  color: #ffff;
+}
+
+.profile-card .desc {
+  padding: 0.5rem 1rem;
+  font-size: 20px;
+}
+
+.profile-card h2 {
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.profile-card .title {
+  text-align: right;
+  color: green;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  background-image: url("https://i0.wp.com/simplecryptoguide.com/wp-content/uploads/2022/08/Dogechain.png");
+  background-position: bottom center;
+  background-size: cover;
+}
+
+#search-book {
+  max-width: 400px;
+}
+
+#search-book::placeholder {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.shelf-book {
+  flex: 1 0 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.shelf-image {
+  width: 300px;
+  height: auto;
+  padding: 10px;
+}
+
+.site-title {
+  grid-area: 1/1;
+  z-index: 1;
+  color: white;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.site-title-container {
+  display: grid;
+  margin-bottom: 5px;
 }
 
 #stats-icon {
@@ -193,9 +282,51 @@ body {
   color: red;
 }
 
-.thanks{
+.stats-flex {
+  flex-direction: column;
+  align-items: center;
+}
+
+#table-description {
+  font-family: "Pacifico", cursive;
+  text-align: center;
+  font-size: 20px;
+  text-shadow: 4px 4px 0px rgba(66, 68, 90, 1);
+}
+
+.table-image {
+  padding: 10px;
+}
+
+#table-title {
+  font-size: 30px;
+  display: block;
+  padding: 20px;
+  font-family: "Pacifico", cursive;
+  text-shadow: 4px 4px 0px rgba(66, 68, 90, 1);
+}
+
+.thanks {
   display: flex;
   align-items: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.title-total {
+  padding: 2.5em 1.5em 1.5em 1.5em;
+  text-align: center;
+}
+
+.title-total i {
+  font-size: 50px;
+  margin-top: 20px;
+}
+
+.title-total i:hover {
+  scale: 1.1;
 }
 
 @keyframes stats-animation {
@@ -226,118 +357,6 @@ body {
   }
 }
 
-.shelf-book {
-  flex: 1 0 33%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.new-book-form input{
-  border-radius: 25px;
-  width: 400px;
-  height: 50px;
-} 
-
-.new-book-form input::placeholder{
-  font-size: 20px;
-  padding: 0 10px;
-} 
-
-.new-book-form label{
-  font-size: 30px;
-} 
-
-.new-book-form {
-  flex: 1 0 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.shelf-image {
-  width: 300px;
-  height: auto;
-  padding: 10px;
-}
-
-
-#search-book::placeholder {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-
-.profile-card {
-  background: #fff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.5);
-  display: flex;
-  flex-direction: row;
-  border-radius: 25px;
-  margin: 0 auto;
-  max-width: 700px;
-}
-.profile-card h2 {
-  margin: 0;
-  padding: 0 1rem;
-}
-.profile-card .title {
-
-  text-align: right;
-  color: green;
-  font-weight: bold;
-  font-size: 25px;
-}
-.profile-card .desc {
-  padding: 0.5rem 1rem;
-  font-size: 20px;
-}
-.profile-buttons{
-  border-style: none;
-  background: none;
-}
-
-.card-text {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-}
-
-
-.title-total {
-  padding: 2.5em 1.5em 1.5em 1.5em;
-  text-align: center;
-}
-
-.title-total i{
-  font-size: 50px;
-  margin-top: 20px;
-}
-
-.title-total i:hover{
-  scale: 1.1;
-}
-
-
-.profile-pic {
-  width: 100%;
-  height: 100%;
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
-  background-image: url("https://i0.wp.com/simplecryptoguide.com/wp-content/uploads/2022/08/Dogechain.png");
-  background-position: bottom center;
-  background-size: cover;
-}
-
-.stats-flex{
-  flex-direction: column;
-align-items: center;
-}
-
-.nav-text{
-  font-size: 18px !important;
-}
-
 @media (min-width: 400px) {
   #table-title {
     font-size: 40px;
@@ -345,10 +364,9 @@ align-items: center;
   #table-description {
     font-size: 20px;
   }
-  #search-book::placeholder{
+  #search-book::placeholder {
     font-size: 20px;
   }
- 
 }
 
 @media (min-width: 600px) {
@@ -361,19 +379,19 @@ align-items: center;
   #search-book::placeholder {
     font-size: 30px;
   }
-  .stats-flex{
+  .stats-flex {
     flex-direction: row;
     align-items: center;
     justify-content: center;
   }
-  .title-total i{
+  .title-total i {
     font-size: 100px;
     margin-top: 30px;
   }
   #logo {
     width: 200px;
   }
-  .nav-text{
+  .nav-text {
     font-size: 40px !important;
   }
 }

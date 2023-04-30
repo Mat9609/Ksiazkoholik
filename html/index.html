@@ -23,10 +23,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
     <title>Książkoholik</title>
   </head>
   <body>
-    <header class="p-3 text-bg-dark sticky-top" >
+    <header class="p-3 text-bg-dark sticky-top">
       <nav
         class="d-flex flex-wrap align-items-center justify-content-lg-around"
         aria-label="Main navigation"
@@ -71,89 +74,93 @@
 
         <div class="text-end justify-content-lg-center">
           <button type="button" class="btn btn-outline-light me-2 nav-text">
-            Login
+            Zaloguj
           </button>
-          <button type="button" class="btn btn-warning nav-text">Sign-up</button>
+          <button type="button" class="btn btn-warning nav-text">
+            Rejestracja
+          </button>
         </div>
       </nav>
     </header>
     <section>
-      <div
-        id="demo"
-        class="carousel slide"
-        data-bs-ride="carousel"
-        style="max-height: 500px"
-      >
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#demo"
-            data-bs-slide-to="0"
-            class="active"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#demo"
-            data-bs-slide-to="1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#demo"
-            data-bs-slide-to="2"
-          ></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img
-              src="../images/carousel-1.jpg"
-              alt="Library photo"
-              class="d-block"
-              style="width: 100%; max-height: 500px"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="../images/carousel-2.jpg"
-              alt="Library photo"
-              class="d-block"
-              style="width: 100%; max-height: 500px"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="../images/carousel-3.jpg"
-              alt="Library photo"
-              class="d-block"
-              style="width: 100%; max-height: 500px"
-            />
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#demo"
-          data-bs-slide="prev"
+      <div class="site-title-container">
+        <div
+          id="carousel_main"
+          class="carousel slide"
+          data-bs-ride="carousel"
+          style="max-height: 500px"
         >
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#demo"
-          data-bs-slide="next"
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carousel_main"
+              data-bs-slide-to="0"
+              class="active"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carousel_main"
+              data-bs-slide-to="1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carousel_main"
+              data-bs-slide-to="2"
+            ></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="../images/carousel-1.jpg"
+                alt="Library photo"
+                class="d-block"
+                style="width: 100%; max-height: 500px"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="../images/carousel-2.jpg"
+                alt="Library photo"
+                class="d-block"
+                style="width: 100%; max-height: 500px"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="../images/carousel-3.jpg"
+                alt="Library photo"
+                class="d-block"
+                style="width: 100%; max-height: 500px"
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carousel_main"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carousel_main"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+        <div
+          class="d-flex flex-wrap justify-content-lg-center align-items-center flex-column site-title"
         >
-          <span class="carousel-control-next-icon"></span>
-        </button>
+          <h1 id="table-title">Wyszukiwarka książek</h1>
+          <p id="table-description">
+            Największa baza książek w Polsce na wyciągnięcie ręki
+          </p>
+        </div>
       </div>
-      <div
-        class="d-flex flex-wrap justify-content-lg-center align-items-center flex-column"
-      >
-        <h1 id="table-title">Wyszukiwarka książek</h1>
-        <p id="table-description">
-          Największa baza książek w Polsce na wyciągnięcie ręki
-        </p>
-      </div>
-      <div class="input-group pe-5 ps-5 pb-3" style="max-width: 600px">
+      <div class="input-group pe-5 ps-5 pb-3">
         <input
           type="search"
           class="form-control rounded fs-2"
@@ -191,6 +198,7 @@
                 <th scope="col" class="h3">Liczba stron</th>
                 <th scope="col" class="h3">Pokaż więcej</th>
                 <th scope="col" class="h3">Dodaj na półkę</th>
+                <th scope="col" class="h3">Edytuj</th>
               </tr>
             </thead>
             <tbody id="table-rows" class="h2"></tbody>
@@ -406,9 +414,7 @@
       </ul>
     </footer>
 
-    <!-- Modal -->
     <div id="myModal" class="modal">
-      <!-- Modal content -->
       <div class="modal-content cl">
         <span class="close">&times;</span>
         <div class="title"></div>
@@ -417,62 +423,144 @@
       </div>
     </div>
 
-    <!-- Form Modal -->
     <div id="myFormModal" class="modal">
-      <!-- Modal content -->
       <div class="modal-content cl">
         <span class="closeForm">&times;</span>
-        <form>
-          <h2>Dodaj swoją książkę</h2>
-          <div class="row">
-            <div class="new-book-form">
-              <label for="ftitle">Tytuł:</label><br />
-              <input
-                type="text"
-                id="ftitle"
-                name="ftitle"
-                placeholder="Tytuł"
-              /><br />
-            </div>
-            <div class="new-book-form">
-              <label for="fauthor">Autor:</label><br />
-              <input
-                type="text"
-                id="fauthor"
-                name="fauthor"
-                placeholder="Autor"
-              /><br />
-            </div>
-            <div class="new-book-form">
-              <label for="fimage">Link do okładki:</label><br />
-              <input
-                type="text"
-                id="fimage"
-                name="fimage"
-                placeholder="Link do okładki"
-              /><br />
-            </div>
-            <div class="new-book-form">
-              <label for="fdate">Data wydania:</label><br />
-              <input
-                type="text"
-                id="fdate"
-                name="fdate"
-                placeholder="Data wydania"
-              /><br />
-            </div>
-            <div class="new-book-form">
-              <label for="fpagesNumber">Liczba stron:</label><br />
-              <input
-                type="number"
-                id="fpagesNumber"
-                name="fpagesNumber"
-                placeholder="Liczba stron"
-              /><br /><br />
-            </div>
-          </div>
+        <h2>Dodaj swoją książkę</h2>
+        <form id="basic-form" action="" method="post">
+          <p>
+            <label for="ftitle">Tytuł:</label>
+            <input
+              type="text"
+              id="ftitle"
+              class="basic-form-input"
+              name="ftitle"
+              placeholder="Tytuł"
+              required
+            />
+          </p>
+          <p>
+            <label for="fauthor">Autor:</label>
+            <input
+              type="text"
+              id="fauthor"
+              class="basic-form-input"
+              name="fauthor"
+              placeholder="Autor"
+              required
+            />
+          </p>
+          <p>
+            <label for="fimage">Link do okładki:</label>
+            <input
+              type="text"
+              id="fimage"
+              class="basic-form-input"
+              name="fimage"
+              placeholder="Link do okładki"
+              required
+            />
+          </p>
+          <p>
+            <label for="fdate">Data wydania:</label>
+            <input
+              type="text"
+              id="fdate"
+              class="basic-form-input"
+              name="fdate"
+              placeholder="Data wydania"
+              required
+            />
+          </p>
+          <p>
+            <label for="fpagesNumber">Liczba stron:</label>
+            <input
+              type="number"
+              id="fpagesNumber"
+              class="basic-form-input"
+              name="fpagesNumber"
+              placeholder="Liczba stron"
+              required
+            />
+          </p>
+          <button
+            class="btn btn-outline-dark rounded ms-1 fs-2"
+            onclick="addToTable()"
+          >
+            Dodaj
+          </button>
         </form>
-        <button class="btn btn-primary fs-3" onclick="addToTable()">Dodaj</button>
+      </div>
+    </div>
+
+    <div id="editBookModal" class="modal">
+      <div class="modal-content cl">
+        <span class="closeForm">&times;</span>
+        <h2>Edytuj książkę</h2>
+        <form id="basic-form" action="" method="post">
+          <p>
+            <label for="etitle">Tytuł:</label>
+            <input
+              type="text"
+              id="etitle"
+              class="basic-form-input"
+              name="etitle"
+              placeholder="Tytuł"
+              required
+            />
+          </p>
+
+          <p>
+            <label for="eauthor">Autor:</label>
+            <input
+              type="text"
+              id="eauthor"
+              class="basic-form-input"
+              name="eauthor"
+              placeholder="Autor"
+              required
+            />
+          </p>
+          <p>
+            <label for="eimage">Link do okładki:</label>
+            <input
+              type="text"
+              id="eimage"
+              class="basic-form-input"
+              name="eimage"
+              placeholder="Link do okładki"
+              required
+            />
+          </p>
+          <p>
+            <label for="epublishDate">Data wydania:</label>
+            <input
+              type="text"
+              id="epublishDate"
+              class="basic-form-input"
+              name="epublishDate"
+              placeholder="Data wydania"
+              required
+            />
+          </p>
+          <p>
+            <label for="epagesNumber">Liczba stron:</label>
+            <input
+              type="number"
+              id="epagesNumber"
+              class="basic-form-input"
+              name="epagesNumber"
+              placeholder="Liczba stron"
+              required
+            />
+          </p>
+        </form>
+        <button
+          id="editBookButton"
+          class="btn btn-outline-dark rounded ms-1 fs-2"
+        >
+          Edytuj
+        </button>
       </div>
     </div>
   </body>

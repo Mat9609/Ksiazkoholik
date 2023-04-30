@@ -1,48 +1,103 @@
-$(document).ready(function () {});
-
 function addToTable() {
-  let table = document.getElementById("table-rows");
-  let newRow = document.createElement("tr");
-  let lp = document.createElement("td");
-  let title = document.createElement("td");
-  let author = document.createElement("td");
-  let image = document.createElement("td");
-  let publishDate = document.createElement("td");
-  let numberOfPages = document.createElement("td");
-  let showMoreRow = document.createElement("td");
-  let addBook = document.createElement("td");
-  lp.innerHTML = document.getElementById("table-rows").children.length + 1;
-  title.innerHTML = document.getElementById("ftitle").value;
-  author.innerHTML = document.getElementById("fauthor").value;
-  image.innerHTML = `<img src=${document.getElementById("fimage").value} class="table-image">`;
-  publishDate.innerHTML = document.getElementById("fdate").value;
-  numberOfPages.innerHTML = document.getElementById("fpagesNumber").value;
-
-  newRow.appendChild(lp);
-  newRow.appendChild(title);
-  newRow.appendChild(author);
-  newRow.appendChild(image);
-  newRow.appendChild(publishDate);
-  newRow.appendChild(numberOfPages);
-  newRow.appendChild(showMoreRow);
-  newRow.appendChild(addBook);
-  table.appendChild(newRow);
-  var modalForm = document.getElementById("myFormModal");
-  modalForm.style.display = "none";
+  //used to validate and add new book to table
+  if ($("#basic-form").valid()) {
+    let table = document.getElementById("table-rows");
+    let newRow = document.createElement("tr");
+    let lp = document.createElement("td");
+    let title = document.createElement("td");
+    let author = document.createElement("td");
+    let image = document.createElement("td");
+    let publishDate = document.createElement("td");
+    let numberOfPages = document.createElement("td");
+    let showMoreRow = document.createElement("td");
+    let addBook = document.createElement("td");
+    lp.innerHTML = document.getElementById("table-rows").children.length + 1;
+    title.innerHTML = document.getElementById("ftitle").value;
+    author.innerHTML = document.getElementById("fauthor").value;
+    image.innerHTML = `<img src=${
+      document.getElementById("fimage").value
+    } class="table-image">`;
+    publishDate.innerHTML = document.getElementById("fdate").value;
+    numberOfPages.innerHTML = document.getElementById("fpagesNumber").value;
+    newRow.appendChild(lp);
+    newRow.appendChild(title);
+    newRow.appendChild(author);
+    newRow.appendChild(image);
+    newRow.appendChild(publishDate);
+    newRow.appendChild(numberOfPages);
+    newRow.appendChild(showMoreRow);
+    newRow.appendChild(addBook);
+    table.appendChild(newRow);
+    var modalForm = document.getElementById("myFormModal");
+    modalForm.style.display = "none";
+  }
 }
 
 function showForm() {
+  //used to show form to add new book to table
   var modalForm = document.getElementById("myFormModal");
-  // Get the <span> element that closes the modal
   var spanForm = document.getElementsByClassName("closeForm")[0];
-  // When the user clicks the button, open the modal
   modalForm.style.display = "block";
-
   spanForm.onclick = function () {
     modalForm.style.display = "none";
   };
+  window.onclick = function (event) {
+    if (event.target == modalForm) {
+      modalForm.style.display = "none";
+    }
+  };
+}
 
-  // When the user clicks anywhere outside of the modal, close it
+function showEditForm(indexToEdit) {
+  //used to show form to edit book in table
+  var modalForm = document.getElementById("editBookModal");
+  var spanForm = document.getElementsByClassName("closeForm")[0];
+  modalForm.style.display = "block";
+  spanForm.onclick = function () {
+    modalForm.style.display = "none";
+  };
+  if (indexToEdit == 0) {
+    indexToEdit = 1;
+  }
+  let title = document.getElementById("etitle");
+  let author = document.getElementById("eauthor");
+  let image = document.getElementById("eimage");
+  let publishDate = document.getElementById("epublishDate");
+  let numberOfPages = document.getElementById("epagesNumber");
+  title.value = document.getElementById(
+    "title" + indexToEdit.toString()
+  ).innerHTML;
+  author.value = document.getElementById(
+    "author" + indexToEdit.toString()
+  ).innerHTML;
+  image.value = document.getElementById(
+    "image" + indexToEdit.toString()
+  ).children[0].src;
+  publishDate.value = document.getElementById(
+    "publishDate" + indexToEdit.toString()
+  ).innerHTML;
+  numberOfPages.value = document.getElementById(
+    "numberOfPages" + indexToEdit.toString()
+  ).innerHTML;
+  let editButton = document.getElementById("editBookButton");
+  editButton.onclick = function () {
+    let title = document.getElementById("title" + indexToEdit.toString());
+    let author = document.getElementById("author" + indexToEdit.toString());
+    let image = document.getElementById("image" + indexToEdit.toString());
+    let publishDate = document.getElementById(
+      "publishDate" + indexToEdit.toString()
+    );
+    let numberOfPages = document.getElementById(
+      "numberOfPages" + indexToEdit.toString()
+    );
+    title.innerHTML = document.getElementById("etitle").value;
+    author.innerHTML = document.getElementById("eauthor").value;
+    image.innerHTML = `<img src=${
+      document.getElementById("eimage").value
+    } class="table-image">`;
+    publishDate.innerHTML = document.getElementById("epublishDate").value;
+    numberOfPages.innerHTML = document.getElementById("epagesNumber").value;
+  };
   window.onclick = function (event) {
     if (event.target == modalForm) {
       modalForm.style.display = "none";
@@ -51,52 +106,37 @@ function showForm() {
 }
 
 function showMore(link) {
-  console.log(link);
-  //Utworzenie żądania GET i jego parametrów
+  //used to show modal with more info about book. More info is downloaded from api thanks to saved link
   let bookResponse = $.ajax({
     type: "GET",
     url: link,
-    //I inne parametry żądania
   })
     .done(function (response) {
-      //Funkcja wykonująca się po otrzymaniu z serwera odpowiedzi OK (status 200)
       var books = response.items;
-      //Uruchomienie funkcji dodającej kraje do listy wybieralnej
     })
     .fail(function (error) {
-      //Funkcja wykonująca się gdy połączenie nie zakończy się sukcesem lub serwer zwróci błąd
       if (error.response)
-        if (error.response.status == 404)
-          //Istenieje odpowiedź z serwera
-          alert("Book list not found");
+        if (error.response.status == 404) alert("Book list not found");
         else alert("Cannot download book list - server error");
-      //Brak odpowiedzi z serwera
       else alert("No connection");
     });
-
   bookResponse.then(function (response) {
     let booksData = response;
-    console.log(booksData.volumeInfo);
     var modal = document.getElementById("myModal");
-    // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-    // When the user clicks the button, open the modal
     modal.style.display = "block";
-
     let titleModal = document.createElement("h2");
     if (booksData.volumeInfo.hasOwnProperty("title")) {
       titleModal.innerHTML = booksData.volumeInfo.title;
     } else {
       titleModal.innerHTML = "Brak danych";
     }
-
     let authorModal = document.createElement("h4");
     if (booksData.volumeInfo.hasOwnProperty("authors")) {
       authorModal.innerHTML = booksData.volumeInfo.authors[0];
     } else {
       authorModal.innerHTML = "Brak danych";
     }
-
     let description = document.createElement("p");
     if (booksData.volumeInfo.hasOwnProperty("description")) {
       description.innerHTML = booksData.volumeInfo.description;
@@ -104,7 +144,6 @@ function showMore(link) {
     } else {
       description.innerHTML = "Brak danych";
     }
-
     let imageModal = document.createElement("img");
     if (booksData.volumeInfo.hasOwnProperty("imageLinks")) {
       imageModal.src = booksData.volumeInfo.imageLinks.smallThumbnail;
@@ -112,18 +151,13 @@ function showMore(link) {
     } else {
       imageModal.src = "";
     }
-
     var aboutBook = document.getElementsByClassName("about-book")[0];
     aboutBook.appendChild(imageModal);
     aboutBook.appendChild(description);
-
     var titleContent = document.getElementsByClassName("title")[0];
     titleContent.appendChild(titleModal);
-
     var authorContent = document.getElementsByClassName("author")[0];
     authorContent.appendChild(authorModal);
-
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
       modal.style.display = "none";
       titleContent.removeChild(titleModal);
@@ -131,8 +165,6 @@ function showMore(link) {
       aboutBook.removeChild(description);
       aboutBook.removeChild(imageModal);
     };
-
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
       if (event.target == modal) {
         modal.style.display = "none";
@@ -146,28 +178,20 @@ function showMore(link) {
 }
 
 function refreshData() {
-  //Utworzenie żądania GET i jego parametrów
+  //refresh data on first opening of site or when it is needed
   let booksResponse = $.ajax({
     type: "GET",
     url: "https://www.googleapis.com/books/v1/volumes?q=inpublisher:fabryka+slow&langRestrict=pl&printType=books&maxResults=10&orderBy=newest",
-    //I inne parametry żądania
   })
     .done(function (response) {
-      //Funkcja wykonująca się po otrzymaniu z serwera odpowiedzi OK (status 200)
       var books = response.items;
-      //Uruchomienie funkcji dodającej kraje do listy wybieralnej
     })
     .fail(function (error) {
-      //Funkcja wykonująca się gdy połączenie nie zakończy się sukcesem lub serwer zwróci błąd
       if (error.response)
-        if (error.response.status == 404)
-          //Istenieje odpowiedź z serwera
-          alert("Book list not found");
+        if (error.response.status == 404) alert("Book list not found");
         else alert("Cannot download book list - server error");
-      //Brak odpowiedzi z serwera
       else alert("No connection");
     });
-
   booksResponse.then(function (response) {
     let booksData = response.items;
     let table = document.getElementById("table-rows");
@@ -183,33 +207,38 @@ function refreshData() {
         let numberOfPages = document.createElement("td");
         let showMoreRow = document.createElement("td");
         let addBook = document.createElement("td");
+        let editBook = document.createElement("td");
         lp.innerHTML = index;
         if (booksData[j].volumeInfo.hasOwnProperty("title")) {
           title.innerHTML = booksData[j].volumeInfo.title;
         } else {
           title.innerHTML = "Brak danych";
         }
+        title.id = "title" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("authors")) {
           author.innerHTML = booksData[j].volumeInfo.authors[0];
         } else {
           author.innerHTML = "Brak danych";
         }
+        author.id = "author" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("imageLinks")) {
           image.innerHTML = `<img src=${booksData[j].volumeInfo.imageLinks.smallThumbnail} class="table-image">`;
         } else {
           image.innerHTML = "Brak danych";
         }
+        image.id = "image" + +index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("publishedDate")) {
           publishDate.innerHTML = booksData[j].volumeInfo.publishedDate;
         } else {
           publishDate.innerHTML = "Brak danych";
         }
+        publishDate.id = "publishDate" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("pageCount")) {
           numberOfPages.innerHTML = booksData[j].volumeInfo.pageCount;
         } else {
           numberOfPages.innerHTML = "Brak danych";
         }
-        console.log(booksData[j].selfLink);
+        numberOfPages.id = "numberOfPages" + index.toString();
         var showMoreElement = document.createElement("input");
         showMoreElement.type = "button";
         showMoreElement.value = "Więcej";
@@ -222,14 +251,24 @@ function refreshData() {
         showMoreElement.classList.add("ms-1");
         showMoreElement.classList.add("fs-2");
         showMoreRow.appendChild(showMoreElement);
-
+        var editElement = document.createElement("input");
+        editElement.type = "button";
+        editElement.value = "Edytuj";
+        editElement.addEventListener("click", function () {
+          showEditForm(j);
+        });
+        editElement.classList.add("btn");
+        editElement.classList.add("btn-outline-dark");
+        editElement.classList.add("rounded");
+        editElement.classList.add("ms-1");
+        editElement.classList.add("fs-2");
+        editBook.appendChild(editElement);
+        editBook.id = "editButton" + index.toString();
         var storedLinks = JSON.parse(localStorage.getItem("links"));
-        console.log(storedLinks);
         if (storedLinks == null) {
           storedLinks = [];
         }
         if (storedLinks.includes(booksData[j].selfLink)) {
-          console.log("Bingo!");
           var addToShelf = document.createElement("input");
           addToShelf.type = "button";
           addToShelf.value = "Dodano na półkę";
@@ -243,7 +282,6 @@ function refreshData() {
             if (storedLinks == null) {
               storedLinks = [];
             }
-            console.log(storedLinks);
             this.value = "Dodano na półkę";
             this.style.backgroundColor = "green";
             if (storedLinks.includes(booksData[j].selfLink) == false) {
@@ -257,7 +295,6 @@ function refreshData() {
         addToShelf.classList.add("ms-1");
         addToShelf.classList.add("fs-2");
         addBook.appendChild(addToShelf);
-
         newRow.appendChild(lp);
         newRow.appendChild(title);
         newRow.appendChild(author);
@@ -266,6 +303,7 @@ function refreshData() {
         newRow.appendChild(numberOfPages);
         newRow.appendChild(showMoreRow);
         newRow.appendChild(addBook);
+        newRow.appendChild(editBook);
         table.appendChild(newRow);
         index++;
       }
@@ -274,29 +312,21 @@ function refreshData() {
 }
 
 function search() {
-  //Utworzenie żądania GET i jego parametrów
+  //used to search for books using google api. prompt entered by user is used in link to api
   let searchQuote = document.getElementById("search-book").value;
   let booksSearchResponse = $.ajax({
     type: "GET",
     url: `https://www.googleapis.com/books/v1/volumes?q=${searchQuote}&printType=books&maxResults=10&orderBy=relevance`,
-    //I inne parametry żądania
   })
     .done(function (response) {
-      //Funkcja wykonująca się po otrzymaniu z serwera odpowiedzi OK (status 200)
       var books = response.items;
-      //Uruchomienie funkcji dodającej kraje do listy wybieralnej
     })
     .fail(function (error) {
-      //Funkcja wykonująca się gdy połączenie nie zakończy się sukcesem lub serwer zwróci błąd
       if (error.response)
-        if (error.response.status == 404)
-          //Istenieje odpowiedź z serwera
-          alert("Book list not found");
+        if (error.response.status == 404) alert("Book list not found");
         else alert("Cannot download book list - server error");
-      //Brak odpowiedzi z serwera
       else alert("No connection");
     });
-
   booksSearchResponse.then(function (response) {
     let booksData = response.items;
     let table = document.getElementById("table-rows");
@@ -339,7 +369,6 @@ function search() {
         } else {
           numberOfPages.innerHTML = "Brak danych";
         }
-        console.log(booksData[j].selfLink);
         var showMoreElement = document.createElement("input");
         showMoreElement.type = "button";
         showMoreElement.value = "Więcej";
@@ -352,13 +381,11 @@ function search() {
         showMoreElement.classList.add("ms-1");
         showMoreElement.classList.add("fs-2");
         showMoreRow.appendChild(showMoreElement);
-
         var storedLinks = JSON.parse(localStorage.getItem("links"));
         if (storedLinks == null) {
           storedLinks = [];
         }
         if (storedLinks.includes(booksData[j].selfLink)) {
-          console.log("Bingo!");
           var addToShelf = document.createElement("input");
           addToShelf.type = "button";
           addToShelf.value = "Dodano na półkę";
@@ -372,7 +399,6 @@ function search() {
             if (storedLinks == null) {
               storedLinks = [];
             }
-            console.log(storedLinks);
             this.value = "Dodano na półkę";
             this.style.backgroundColor = "green";
             if (storedLinks.includes(booksData[j].selfLink) == false) {
@@ -380,14 +406,12 @@ function search() {
             }
           });
         }
-
         addToShelf.classList.add("btn");
         addToShelf.classList.add("btn-outline-dark");
         addToShelf.classList.add("rounded");
         addToShelf.classList.add("ms-1");
         addToShelf.classList.add("fs-2");
         addBook.appendChild(addToShelf);
-
         newRow.appendChild(lp);
         newRow.appendChild(title);
         newRow.appendChild(author);
@@ -397,7 +421,6 @@ function search() {
         newRow.appendChild(showMoreRow);
         newRow.appendChild(addBook);
         table.appendChild(newRow);
-
         index++;
       }
     }
@@ -405,11 +428,11 @@ function search() {
 }
 
 function addBookToShelf(link, button) {
+  //used to add book to shelf - save it's link to local storage
   if (typeof Storage !== "undefined") {
     links.push(link);
     localStorage.setItem("links", JSON.stringify(links));
     var storedLinks = JSON.parse(localStorage.getItem("links"));
-    console.log(storedLinks);
   }
 }
 
@@ -417,4 +440,5 @@ var links = JSON.parse(localStorage.getItem("links"));
 if (links === null) {
   links = [];
 }
+
 refreshData();
