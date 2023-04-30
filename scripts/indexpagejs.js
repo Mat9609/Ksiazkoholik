@@ -236,7 +236,7 @@ function refreshData() {
         } else {
           image.innerHTML = "Brak danych";
         }
-        image.id = "image" + +index.toString();
+        image.id = "image" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("publishedDate")) {
           publishDate.innerHTML = booksData[j].volumeInfo.publishedDate;
         } else {
