@@ -51,14 +51,18 @@ function showForm() {
 function showEditForm(indexToEdit) {
   //used to show form to edit book in table
   var modalForm = document.getElementById("editBookModal");
-  var spanForm = document.getElementsByClassName("closeForm")[0];
+  var spanForm = document.getElementsByClassName("closeEditForm")[0];
   modalForm.style.display = "block";
   spanForm.onclick = function () {
     modalForm.style.display = "none";
   };
-  if (indexToEdit == 0) {
-    indexToEdit = 1;
-  }
+  spanForm.onclick = function () {
+    modalForm.style.display = "none";
+  };
+
+  indexToEdit = Number(indexToEdit) + 1;
+
+  console.log(indexToEdit);
   let title = document.getElementById("etitle");
   let author = document.getElementById("eauthor");
   let image = document.getElementById("eimage");
@@ -70,9 +74,13 @@ function showEditForm(indexToEdit) {
   author.value = document.getElementById(
     "author" + indexToEdit.toString()
   ).innerHTML;
-  image.value = document.getElementById(
-    "image" + indexToEdit.toString()
-  ).children[0].src;
+  if (
+    document.getElementById("image" + indexToEdit.toString()).children[0] != null
+  ) {
+    image.value = document.getElementById(
+      "image" + indexToEdit.toString()
+    ).children[0].src;
+  }
   publishDate.value = document.getElementById(
     "publishDate" + indexToEdit.toString()
   ).innerHTML;
@@ -199,7 +207,7 @@ function refreshData() {
     let table = document.getElementById("table-rows");
     let index = 1;
     for (let j in booksData) {
-      if (booksData[j].volumeInfo.hasOwnProperty("imageLinks")) {
+      if (booksData[j].volumeInfo.hasOwnProperty("title")) {
         let newRow = document.createElement("tr");
         let lp = document.createElement("td");
         let title = document.createElement("td");
@@ -335,7 +343,8 @@ function search() {
     let index = 1;
     $("#top-books tbody").html("");
     for (let j in booksData) {
-      if (booksData[j].volumeInfo.hasOwnProperty("imageLinks")) {
+      console.log(j);
+      if (booksData[j].volumeInfo.hasOwnProperty("title")) {
         let newRow = document.createElement("tr");
         let lp = document.createElement("td");
         let title = document.createElement("td");
@@ -345,32 +354,38 @@ function search() {
         let numberOfPages = document.createElement("td");
         let showMoreRow = document.createElement("td");
         let addBook = document.createElement("td");
+        let editBook = document.createElement("td");
         lp.innerHTML = index;
         if (booksData[j].volumeInfo.hasOwnProperty("title")) {
           title.innerHTML = booksData[j].volumeInfo.title;
         } else {
           title.innerHTML = "Brak danych";
         }
+        title.id = "title" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("authors")) {
           author.innerHTML = booksData[j].volumeInfo.authors[0];
         } else {
           author.innerHTML = "Brak danych";
         }
+        author.id = "author" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("imageLinks")) {
           image.innerHTML = `<img src=${booksData[j].volumeInfo.imageLinks.smallThumbnail}>`;
         } else {
           image.innerHTML = "Brak danych";
         }
+        image.id = "image" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("publishedDate")) {
           publishDate.innerHTML = booksData[j].volumeInfo.publishedDate;
         } else {
           publishDate.innerHTML = "Brak danych";
         }
+        publishDate.id = "publishDate" + index.toString();
         if (booksData[j].volumeInfo.hasOwnProperty("pageCount")) {
           numberOfPages.innerHTML = booksData[j].volumeInfo.pageCount;
         } else {
           numberOfPages.innerHTML = "Brak danych";
         }
+        numberOfPages.id = "numberOfPages" + index.toString();
         var showMoreElement = document.createElement("input");
         showMoreElement.type = "button";
         showMoreElement.value = "Więcej";
@@ -383,6 +398,21 @@ function search() {
         showMoreElement.classList.add("ms-1");
         showMoreElement.classList.add("fs-2");
         showMoreRow.appendChild(showMoreElement);
+
+        var editElement = document.createElement("input");
+        editElement.type = "button";
+        editElement.value = "Edytuj";
+        editElement.addEventListener("click", function () {
+          showEditForm(j);
+        });
+        editElement.classList.add("btn");
+        editElement.classList.add("btn-outline-dark");
+        editElement.classList.add("rounded");
+        editElement.classList.add("ms-1");
+        editElement.classList.add("fs-2");
+        editBook.appendChild(editElement);
+        editBook.id = "editButton" + index.toString();
+
         var storedLinks = JSON.parse(localStorage.getItem("links"));
         if (storedLinks == null) {
           storedLinks = [];
@@ -422,6 +452,7 @@ function search() {
         newRow.appendChild(numberOfPages);
         newRow.appendChild(showMoreRow);
         newRow.appendChild(addBook);
+        newRow.appendChild(editBook);
         table.appendChild(newRow);
         index++;
       }

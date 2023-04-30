@@ -67,6 +67,22 @@
   cursor: pointer;
 }
 
+.closeEditForm {
+  color: #aaaaaa;
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.closeEditForm:hover,
+.closeEditForm:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .closeForm {
   color: #aaaaaa;
   position: absolute;
